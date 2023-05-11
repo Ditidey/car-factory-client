@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowAltCircleRight, FaCalendarDay, FaLocationArrow, FaPhoneSquareAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 const Services = () => {
     const [services, setServices] = useState([])
     useEffect(() => {
-        fetch('services.json')
+        fetch('http://localhost:5000/services')
             .then(res => res.json())
             .then(data => setServices(data))
     }, [])
@@ -16,44 +17,46 @@ const Services = () => {
             </div>
             <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-2'>
                 {
-                    services.map(service => 
-                    <div key={service._id} className="card w-96 bg-base-100 shadow-xl">
-                        <figure className="px-10 pt-10">
-                            <img src={service.img} alt="Shoes" className="rounded-xl h-full w-full" />
-                        </figure>
-                        <div className="card-body ">
-                            <h2 className="card-title font-bold">{service.title}</h2>
-                           
-                            <div className="card-actions flex justify-between">
-                            <p className='text-orange-600 font-serif'>Price: ${service.price}</p>
-                                <button className="btn btn-error bg-orange-700"><FaArrowAltCircleRight></FaArrowAltCircleRight></button>
+                    services.map(service =>
+                        <div key={service._id} className="card w-96 bg-base-100 shadow-xl">
+                            <figure className="px-10 pt-10">
+                                <img src={service.img} alt="Shoes" className="rounded-xl h-full w-full" />
+                            </figure>
+                            <div className="card-body ">
+                                <h2 className="card-title font-bold">{service.title}</h2>
+
+                                <div className="card-actions flex justify-between">
+                                    <p className='text-orange-600 font-serif'>Price: ${service.price}</p>
+                                    <Link to={`/checkout/${service._id}`}>
+                                        <button className="btn btn-error bg-orange-500">Check out <FaArrowAltCircleRight></FaArrowAltCircleRight></button>
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
-                    </div>)
+                        </div>)
                 }
-                 
+
             </div>
             <p className='text-orange-600 text-xl text-center font-semibold'>More services</p>
             <div className='bg-black text-white grid lg:grid-cols-3 gap-6 py-10 px-20 mx-10 rounded-2xl my-8'>
-                    <div className='flex'>
-                        <FaCalendarDay className='bg-orange-900 mt-4 me-3 h-6 w-6'></FaCalendarDay>
-                        <p><p>We are open from Mon-Fri Day</p>
+                <div className='flex'>
+                    <FaCalendarDay className='bg-orange-900 mt-4 me-3 h-6 w-6'></FaCalendarDay>
+                    <p><p>We are open from Mon-Fri Day</p>
                         <p className='font-serif font-bold text-xl'>7.00am - 9.00pm</p>
-                        </p>
-                    </div>
-                    <div className='flex'>
+                    </p>
+                </div>
+                <div className='flex'>
                     <FaPhoneSquareAlt className='bg-orange-900 mt-4 me-3 h-6 w-6'></FaPhoneSquareAlt>
                     <p><p>Have a question?</p>
                         <p className='font-serif font-bold text-xl'>+353 2233445</p>
-                        </p>
-                    </div>
-                    <div className='flex'>
+                    </p>
+                </div>
+                <div className='flex'>
                     <FaLocationArrow className='bg-orange-900 mt-4 me-3 h-6 w-6'></FaLocationArrow>
                     <p><p>Need a repair? Our address</p>
                         <p className='font-serif font-bold text-xl'>Dublin 8, Ireland</p>
-                        </p>
-                    </div>
-                     
+                    </p>
+                </div>
+
             </div>
         </div>
     );
